@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
 
+// components
+import "./gradesAndTags";
+
 // stylesheets
 import "../styles/studentCard.css";
+import GradesAndTags from "./gradesAndTags";
+
+// helpers
+import handleGrades from "../helpers/gradesHelper";
 
 export default function StudentCard({ studentInfo, handleTagInput }) {
+  // init state management for:
+  // single student object,
+  // truthy/falsy showGrades,
+  // tagInput value
   const [studentInfoState, setStudentInfo] = useState(studentInfo);
   const [showGrades, setShowGrades] = useState(false);
   const [tagInput, setTagInput] = useState();
+
   let {
     id,
     company,
@@ -17,27 +29,13 @@ export default function StudentCard({ studentInfo, handleTagInput }) {
     skill,
   } = studentInfoState;
 
-  const handleGrades = () => {
-    const grades = studentInfoState.grades;
-
-    const parsedGrades = grades.map((grade) => parseInt(grade));
-
-    const reducedGrades = parsedGrades.reduce((total, next) => {
-      total += next;
-      return total;
-    }, 0);
-
-    const average = reducedGrades / parsedGrades.length;
-
-    setStudentInfo((s) => ({ ...s, grades: parsedGrades, average }));
-  };
-
+  // state and input submission handlers
   const handleShowState = () => {
     setShowGrades(!showGrades);
   };
 
   const handleTagSubmission = (e) => {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
       const newTagArray = [...studentInfoState.tags, tagInput];
       setStudentInfo((s) => ({ ...s, tags: newTagArray }));
       handleTagInput(id, studentInfoState);
@@ -49,8 +47,9 @@ export default function StudentCard({ studentInfo, handleTagInput }) {
     setTagInput(e.target.value);
   };
 
+  // parse grades on initial render
   useEffect(() => {
-    handleGrades();
+    handleGrades(studentInfoState, setStudentInfo);
   }, []);
 
   return (
@@ -69,30 +68,11 @@ export default function StudentCard({ studentInfo, handleTagInput }) {
           <li>Average: {studentInfoState.average}%</li>
         </ul>
         {showGrades && (
-          <>
-            <ul className="gradeList">
-              {studentInfoState.grades.map((grade) => {
-                const testNum = studentInfoState.grades.indexOf(grade);
-                return (
-                  <li key={testNum}>
-                    Test {testNum + 1}: <span>{grade}%</span>
-                  </li>
-                );
-              })}
-            </ul>
-            <div className="tagList">
-              {studentInfoState.tags?.map((tag) => (
-                <span className="studentTag">{tag}</span>
-              ))}
-            </div>
-            <input
-              id="add-tag-input"
-              className="tagInput"
-              placeholder="Add a tag"
-              onChange={handleTagChange}
-              onKeyDown={handleTagSubmission}
-            />
-          </>
+          <GradesAndTags
+            studentInfoState={studentInfoState}
+            handleTagChange={handleTagChange}
+            handleTagSubmission={handleTagSubmission}
+          />
         )}
       </div>
       <h2 onClick={handleShowState} className="showIcon expand-btn">

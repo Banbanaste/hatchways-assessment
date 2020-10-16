@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 // components
 import StudentCard from "./studentCard";
@@ -7,31 +7,19 @@ import StudentCard from "./studentCard";
 import "../styles/App.css";
 import "../styles/input.css";
 
+// helpers
+import filteredList from "../helpers/filterSearchHelper";
+
 function List({ students, handleTagInput }) {
+  // state init
+  // name input value
+  // tag input value
   const [filterInput, setFilterInput] = useState();
   const [tagInput, setTag] = useState();
 
-  const filteredList = students?.filter((student) => {
-    const name = student.firstName + " " + student.lastName;
-    const tag = student.tags.join("").toLowerCase();
-    const standardizedName = name.toLowerCase();
-    if (!filterInput && tagInput) {
-      if (tag.includes(tagInput)) {
-        return student;
-      }
-    } else if (!tagInput && filterInput) {
-      if (standardizedName.includes(filterInput)) {
-        return student;
-      }
-    } else if (filterInput && tagInput) {
-      if (standardizedName.includes(filterInput) && tag.includes(tagInput)) {
-        return student;
-      }
-    } else if (!filterInput && !tagInput) {
-      return student;
-    }
-  });
+  const filteredListRes = filteredList(students, filterInput, tagInput);
 
+  // input change hanlers
   const handleFilterChange = (e) => {
     setFilterInput(e.target.value);
   };
@@ -54,7 +42,7 @@ function List({ students, handleTagInput }) {
         placeholder="Search by tags"
         onChange={handleTagInputChange}
       />
-      {filteredList?.map((student) => (
+      {filteredListRes?.map((student) => (
         <StudentCard
           studentInfo={student}
           key={student.id}
