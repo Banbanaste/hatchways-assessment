@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+
+// components
+import List from "./components/list";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [students, setStudents] = useState();
+
+  useEffect(() => {
+    fetch("https://api.hatchways.io/assessment/students")
+      .then((res) => res.json())
+      .then((data) => {
+        const stateData = data.students.map((student) => {
+          return { ...student, tags: [] };
+        });
+        setStudents(stateData);
+      });
+  }, []);
+
+  const handleTagInput = (studentID, studentObj) => {
+    const addTagToList = students.map((student) => {
+      if (student.id == studentID) {
+        return studentObj;
+      } else {
+        return student;
+      }
+    });
+    setStudents(addTagToList);
+  };
+
+  return <List students={students} handleTagInput={handleTagInput} />;
 }
 
 export default App;

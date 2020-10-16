@@ -1,0 +1,15 @@
+.filterInput {
+  font-size: 1.25em;
+  border: none;
+  border-bottom: 1px solid lightgray;
+  color: gray;
+  margin-left: 15px;
+  margin-top: 15px;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.filterInput:focus {
+  outline: 0;
+  border-bottom-width: 4px;
+}

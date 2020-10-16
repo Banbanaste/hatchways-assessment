@@ -1,0 +1,75 @@
+.studentCard {
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  justify-content: flex-start;
+  padding: 15px 25px;
+}
+
+.userPic {
+  border: solid 1px lightgray;
+  border-radius: 50%;
+  height: 100%;
+  margin-top: 1.25em;
+  width: 150px;
+}
+
+.cardBody {
+  margin-left: 2.25em;
+  width: 100%;
+}
+
+.cardBody h2 {
+  font-size: 2.5em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.cardBody ul {
+  color: gray;
+  list-style: none;
+  padding-left: 1.5em;
+}
+
+.userInfoList li {
+  margin: 5px 0;
+}
+
+.gradeList span {
+  padding-left: 2em;
+}
+
+.showIcon {
+  align-self: flex-start;
+  color: lightgray;
+  font-size: 2.5em;
+  justify-self: flex-end;
+  margin: 0;
+}
+
+.showIcon:hover {
+  color: #000;
+  cursor: pointer;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding-left: 1.5em;
+}
+
+.studentTag {
+  background-color: rgb(240, 240, 240);
+  border-radius: 5px;
+  margin-right: 5px;
+  padding: 5px 15px;
+}
+
+.tagInput {
+  border: none;
+  border-bottom: solid 2px gray;
+  margin-left: 1.5em;
+  margin-top: 15px;
+  padding: 5px;
+  padding-right: 0;
+}
