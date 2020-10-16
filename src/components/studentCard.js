@@ -49,8 +49,8 @@ export default function StudentCard({ studentInfo, handleTagInput }) {
 
   // parse grades on initial render
   useEffect(() => {
-    handleGrades(studentInfoState, setStudentInfo);
-  }, []);
+    handleGrades(studentInfo, setStudentInfo);
+  }, [studentInfo]);
 
   return (
     <div className="studentCard">

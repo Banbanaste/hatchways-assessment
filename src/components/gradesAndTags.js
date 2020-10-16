@@ -19,7 +19,9 @@ export default function GradesAndTags({
       </ul>
       <div className="tagList">
         {studentInfoState.tags?.map((tag) => (
-          <span className="studentTag">{tag}</span>
+          <span className="studentTag" key={studentInfoState.tags.indexOf(tag)}>
+            {tag}
+          </span>
         ))}
       </div>
       <input
